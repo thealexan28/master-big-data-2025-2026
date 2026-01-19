@@ -9,3 +9,4 @@ Repositorio de prácticas y ejercicios del Master en Big Data.
 - `3-dec-9/` - Docker y APIs
 - `4-dec-15/` - Docker
 - `5-jan-12/` - Numpy
+- `6-jan-19/` - Comandos de linux y shell
