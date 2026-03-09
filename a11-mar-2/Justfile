@@ -1,0 +1,26 @@
+# Variables por defecto
+port := "8000"
+
+# Muestra la ayuda por defecto
+default:
+    @just --list
+
+# Levanta toda la infraestructura (API, Mongo y MinIO) en segundo plano
+up:
+    docker compose up -d --build
+
+# Para todos los contenedores y borra los volúmenes (¡Cuidado, borra los datos!)
+down:
+    docker compose down -v
+
+# Muestra los logs de la API en tiempo real
+logs:
+    docker compose logs -f api
+
+# Reinicia solo la API (útil si cambias código y no tienes reload)
+restart-api:
+    docker compose restart api
+
+# Prueba rápida para ver si la API responde
+ping:
+    curl http://localhost:{{port}}/health
