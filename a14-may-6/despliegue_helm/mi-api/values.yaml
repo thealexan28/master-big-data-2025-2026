@@ -1,0 +1,17 @@
+# Estos valores son los que el usuario puede sobreescribir con --set o -f values.yaml.
+# Helm los inyecta en los templates de la carpeta templates/.
+
+replicaCount: 1
+
+image:
+  repository: mi-api
+  tag: "0.1.0"
+  # Never: la imagen se importó con k3d image import, no viene de un registry.
+  pullPolicy: Never
+
+service:
+  port: 80
+  targetPort: 8000
+
+ingress:
+  host: mi-api.localhost

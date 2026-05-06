@@ -1,0 +1,19 @@
+# Service para MinIO: expone los dos puertos (API S3 y consola web).
+# ClusterIP: accesible solo desde dentro. Probaremos con port-forward.
+# Despues, el Ingress (13-ingress-minio.yaml) usara este Service como backend.
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+  namespace: clase14
+spec:
+  type: ClusterIP
+  selector:
+    app: minio
+  ports:
+    - name: api
+      port: 9000
+      targetPort: 9000
+    - name: console
+      port: 9001
+      targetPort: 9001

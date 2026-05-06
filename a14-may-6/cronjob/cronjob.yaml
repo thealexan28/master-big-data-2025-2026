@@ -1,0 +1,28 @@
+# CronJob: lanza un Job segun un schedule cron.
+# "* * * * *" = cada minuto (util para demos en clase).
+# En produccion seria algo como "0 2 * * *" (cada dia a las 2:00 AM).
+# successfulJobsHistoryLimit: cuantos Jobs completados conserva (para ver logs).
+# failedJobsHistoryLimit: cuantos Jobs fallidos conserva.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reporte-periodico
+  namespace: clase14
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: reporte
+              image: busybox
+              command: ["sh", "-c"]
+              args:
+                - |
+                  echo "=== Reporte generado: $(date) ==="
+                  echo "Pod: $HOSTNAME"
+                  echo "Tarea completada."

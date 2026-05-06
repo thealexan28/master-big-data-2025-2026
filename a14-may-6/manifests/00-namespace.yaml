@@ -1,0 +1,7 @@
+# Namespace: aislamiento logico dentro del cluster.
+# Todos los recursos de esta clase viven aqui dentro para no
+# mezclarse con kube-system, default, etc.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: clase14

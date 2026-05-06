@@ -1,0 +1,28 @@
+# Deployment: el controlador que mantiene N replicas vivas.
+# Si borras un pod, el ReplicaSet del Deployment lo recrea.
+# Si cambias la imagen, hace rolling update sin downtime.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+  namespace: clase14
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: whoami
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+        - name: whoami
+          image: traefik/whoami
+          ports:
+            - containerPort: 80
+          # WHOAMI_NAME aparece en cada respuesta HTTP.
+          # Viene del ConfigMap (ver 04-configmap-whoami.yaml).
+          envFrom:
+            - configMapRef:
+                name: whoami-config

@@ -1,0 +1,13 @@
+# PVC para los datos de Postgres (/var/lib/postgresql/data).
+# Mismo patron que MinIO: borrar el pod no borra los datos.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data
+  namespace: clase14
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

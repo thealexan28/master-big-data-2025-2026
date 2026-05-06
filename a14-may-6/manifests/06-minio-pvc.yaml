@@ -1,0 +1,15 @@
+# PersistentVolumeClaim: peticion de almacenamiento.
+# El cluster (k3d) tiene una StorageClass por defecto (local-path)
+# que aprovisiona dinamicamente un PersistentVolume cuando llega el PVC.
+# Si borramos el pod de MinIO, el PVC sigue vivo y los datos persisten.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-data
+  namespace: clase14
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

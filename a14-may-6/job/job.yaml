@@ -1,0 +1,28 @@
+# Job: se ejecuta una vez, completa y no se reinicia.
+# A diferencia de un Deployment, no hay replicas ni reintentos indefinidos.
+# backoffLimit: cuantas veces reintenta si falla antes de darse por vencido.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: analisis-datos
+  namespace: clase14
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never   # el pod no se reinicia; el Job crea uno nuevo si falla
+      containers:
+        - name: analisis
+          image: python:3.11-slim
+          command: ["python3", "-c"]
+          args:
+            - |
+              import random, statistics
+              random.seed(42)
+              datos = [random.gauss(50, 10) for _ in range(1000)]
+              print(f"Muestras : {len(datos)}")
+              print(f"Media    : {statistics.mean(datos):.2f}")
+              print(f"Mediana  : {statistics.median(datos):.2f}")
+              print(f"Desv.tip.: {statistics.stdev(datos):.2f}")
+              print(f"Min / Max: {min(datos):.2f} / {max(datos):.2f}")
+              print("Job completado.")

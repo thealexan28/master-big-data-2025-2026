@@ -1,0 +1,17 @@
+# Service: da una IP virtual estable + DNS interno + balanceo
+# entre todos los pods que matcheen el selector.
+# Tipo ClusterIP: solo accesible desde dentro del cluster.
+# Para probarlo desde fuera usaremos kubectl port-forward.
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+  namespace: clase14
+spec:
+  type: ClusterIP
+  selector:
+    app: whoami
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

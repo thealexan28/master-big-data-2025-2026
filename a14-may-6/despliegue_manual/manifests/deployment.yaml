@@ -1,0 +1,23 @@
+# imagePullPolicy: Never porque la imagen se carga directamente en el cluster con
+# k3d image import. No viene de ningún registry público.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-api
+  namespace: clase14
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mi-api
+  template:
+    metadata:
+      labels:
+        app: mi-api
+    spec:
+      containers:
+        - name: mi-api
+          image: mi-api:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000

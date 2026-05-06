@@ -1,0 +1,17 @@
+# Pod suelto: la unidad minima de despliegue en Kubernetes.
+# Aviso pedagogico: en la vida real casi nunca se crea un Pod a pelo.
+# Lo hacemos aqui solo para demostrar que sin Deployment NO se recrea
+# si se borra. En produccion siempre Deployment / StatefulSet / Job / etc.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: whoami-suelto
+  namespace: clase14
+  labels:
+    app: whoami-suelto
+spec:
+  containers:
+    - name: whoami
+      image: traefik/whoami
+      ports:
+        - containerPort: 80

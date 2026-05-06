@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mi-api
+description: API minima de FastAPI para practicar Helm en clase.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

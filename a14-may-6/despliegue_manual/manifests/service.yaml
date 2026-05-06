@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-api
+  namespace: clase14
+spec:
+  type: ClusterIP
+  selector:
+    app: mi-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000

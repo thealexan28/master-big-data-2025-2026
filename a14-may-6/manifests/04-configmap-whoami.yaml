@@ -1,0 +1,10 @@
+# ConfigMap: configuracion (no secreta) en clave-valor.
+# WHOAMI_NAME aparece en la respuesta de whoami como campo "Name".
+# Cambiar este ConfigMap + kubectl rollout restart = nombre nuevo sin reconstruir imagen.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: whoami-config
+  namespace: clase14
+data:
+  WHOAMI_NAME: "Clase 14 - Kubernetes"

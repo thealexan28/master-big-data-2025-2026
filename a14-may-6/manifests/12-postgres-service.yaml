@@ -1,0 +1,15 @@
+# Service ClusterIP para Postgres.
+# Cualquier pod del namespace podria conectarse via "postgres:5432" (DNS interno).
+# Desde fuera del cluster: kubectl port-forward o kubectl exec dentro del propio pod.
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: clase14
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432

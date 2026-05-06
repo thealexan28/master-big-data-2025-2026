@@ -1,0 +1,40 @@
+# Deployment de Postgres con 1 replica.
+# Aviso: en produccion Postgres suele ir en StatefulSet (identidad estable, orden de arranque,
+# almacenamiento por replica para replicacion). Aqui Deployment + PVC nos vale para la demo.
+# El subPath en el volumen evita que Postgres se queje del lost+found inicial del PV.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: clase14
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-credenciales
+          # PGDATA en subdirectorio para evitar conflicto con lost+found en el volumen.
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: postgres-data

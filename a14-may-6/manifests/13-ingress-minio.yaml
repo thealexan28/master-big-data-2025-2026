@@ -1,0 +1,22 @@
+# Ingress: enruta peticiones HTTP desde fuera del cluster hacia un Service interno.
+# k3d trae Traefik como ingress controller por defecto.
+# Como creamos el cluster con --port "8080:80@loadbalancer", el host del navegador
+# accede al puerto 80 del cluster a traves del 8080 de localhost.
+# Probar: http://minio.localhost:8080  (Windows resuelve *.localhost a 127.0.0.1)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-console
+  namespace: clase14
+spec:
+  rules:
+    - host: minio.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 9001

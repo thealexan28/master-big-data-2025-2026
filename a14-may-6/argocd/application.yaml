@@ -1,0 +1,25 @@
+# Application de ArgoCD: le dice a ArgoCD donde esta el codigo (Git)
+# y donde desplegarlo (cluster + namespace).
+# ArgoCD vigila el repo y aplica los cambios automaticamente cuando detecta un commit.
+# Cambiad repoURL por vuestra URL de GitHub.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mi-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AmbroxMr/master-big-data-2025-2026
+    targetRevision: HEAD
+    path: a14-may-6/despliegue_helm/mi-api   # chart que escribimos a mano en el bloque 12
+    helm:
+      values: |
+        replicaCount: 1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: clase14
+  syncPolicy:
+    automated:
+      prune: true      # borra recursos que ya no esten en Git
+      selfHeal: true   # si alguien toca el cluster a mano, ArgoCD lo revierte
